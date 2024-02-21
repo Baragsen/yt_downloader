@@ -27,6 +27,7 @@ def get_channel_name(url):
     except Exception as err:
         print(err)
         return None
+    
 def get_channel_url(url):
     try :
         yt_obj = get_youtube_object(url)
@@ -48,18 +49,74 @@ def append_video_descriptions(url):
             if isinstance(yt_obj, pytube.YouTube):
                 file.write(f"Video Title: {yt_obj.title}\n")
                 file.write(f"Video Description:\n{yt_obj.description}\n\n")
+
             elif isinstance(yt_obj, pytube.Playlist) or isinstance(yt_obj, pytube.Channel):
                 for video in yt_obj.video_urls:
                     yt = pytube.YouTube(video)
                     file.write(f"Video Title: {yt.title}\n")
                     file.write(f"Video Description:\n{yt.description}\n\n")
+
     except Exception as e:
         print("Error:", e)
 
 def get_length(url):
     try:
         yt_obj = get_youtube_object(url)
-        return yt_obj.length
+        if isinstance(yt_obj, pytube.YouTube) or isinstance(yt_obj, pytube.Playlist) :
+            return yt_obj.length
+        else :
+            return None  
+             
+    except Exception as e:
+        print("Error:", e)
+        return None
+    
+def get_metadata(url):
+    try:
+        yt_obj = get_youtube_object(url)
+        if isinstance(yt_obj, pytube.YouTube):
+            return yt_obj.metadata
+        
+        elif isinstance(yt_obj, pytube.Playlist) or isinstance(yt_obj, pytube.Channel) :
+            metadata = []
+            for video_url in yt_obj.video_urls:
+                yt = pytube.YouTube(video_url)
+                metadata.append(yt.metadata)
+            return metadata
+
+    except Exception as e:
+        print("Error:", e)
+        return None
+
+def get_views(url):
+    try:
+        yt_obj = get_youtube_object(url)
+        if isinstance(yt_obj, pytube.YouTube) or isinstance(yt_obj, pytube.Playlist):
+            return yt_obj.views
+        
+        elif isinstance(yt_obj, pytube.Channel):
+            return None
+    except Exception as e:
+        print("Error:", e)
+        return None
+
+
+def get_thumbnail_url(url):
+    try:
+        yt_obj = get_youtube_object(url)
+        if isinstance(yt_obj, pytube.YouTube):
+            return yt_obj.thumbnail_url
+        
+        elif isinstance(yt_obj, pytube.Playlist):
+            thumbnails = []
+            for video_url in yt_obj.video_urls:
+                yt = pytube.YouTube(video_url)
+                thumbnails.append(yt.thumbnail_url)
+            return thumbnails
+        
+        elif isinstance(yt_obj, pytube.Channel):
+            return None
+        
     except Exception as e:
         print("Error:", e)
         return None
