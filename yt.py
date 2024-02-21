@@ -120,3 +120,33 @@ def get_thumbnail_url(url):
     except Exception as e:
         print("Error:", e)
         return None
+    
+def download_captions(url, lang_code='en'):
+    try:
+        yt_obj = get_youtube_object(url)
+        
+        if isinstance(yt_obj, pytube.Playlist):
+            for video_url in yt_obj.video_urls:
+                download_captions(video_url, lang_code)
+        
+        elif isinstance(yt_obj, pytube.YouTube):
+            captions = yt_obj.captions
+            if lang_code in captions:
+                caption_track = captions[lang_code]
+                # Download captions in SRT format (default)
+                caption_track.download(output_path=f'caption_{pytube.extract.video_id(url)}_{lang_code}', srt=True)
+                print(f"Captions in '{lang_code}' downloaded successfully for video: {yt_obj.title}")
+            
+    except Exception as e:
+        print("Error:", e)
+
+def get_video_urls(url):
+    try:
+        yt_obj = get_youtube_object(url)
+        if isinstance(yt_obj, (pytube.Playlist, pytube.Channel)):
+            return yt_obj.video_urls
+        else:
+            return []
+    except Exception as e:
+        print("Error:", e)
+        return []
