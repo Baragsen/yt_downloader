@@ -1,4 +1,5 @@
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
@@ -24,49 +25,49 @@ class Ui_AdvancedPage(object):
 "}\n"
 "\n"
 "QPushButton:pressed {\n"
-"    background-color: #C5A4EE;\n"
+"    background-color: #ce5698;\n"
 "}")
         self.pushButton.setObjectName("pushButton")
-        self.widget = QtWidgets.QWidget(self.centralwidget)
-        self.widget.setGeometry(QtCore.QRect(190, 80, 401, 381))
-        self.widget.setObjectName("widget")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.widget)
+        self.layoutWidget = QtWidgets.QWidget(self.centralwidget)
+        self.layoutWidget.setGeometry(QtCore.QRect(190, 80, 401, 381))
+        self.layoutWidget.setObjectName("layoutWidget")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.layoutWidget)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.checkBox = QtWidgets.QCheckBox(self.widget)
+        self.checkBox = QtWidgets.QCheckBox(self.layoutWidget)
         self.checkBox.setStyleSheet("font: 14pt \"MS Shell Dlg 2\";")
         self.checkBox.setObjectName("checkBox")
         self.verticalLayout.addWidget(self.checkBox)
-        self.checkBox_6 = QtWidgets.QCheckBox(self.widget)
+        self.checkBox_6 = QtWidgets.QCheckBox(self.layoutWidget)
         self.checkBox_6.setStyleSheet("font: 14pt \"MS Shell Dlg 2\";")
         self.checkBox_6.setObjectName("checkBox_6")
         self.verticalLayout.addWidget(self.checkBox_6)
-        self.checkBox_4 = QtWidgets.QCheckBox(self.widget)
+        self.checkBox_4 = QtWidgets.QCheckBox(self.layoutWidget)
         self.checkBox_4.setStyleSheet("font: 14pt \"MS Shell Dlg 2\";")
         self.checkBox_4.setObjectName("checkBox_4")
         self.verticalLayout.addWidget(self.checkBox_4)
-        self.checkBox_5 = QtWidgets.QCheckBox(self.widget)
+        self.checkBox_5 = QtWidgets.QCheckBox(self.layoutWidget)
         self.checkBox_5.setStyleSheet("font: 14pt \"MS Shell Dlg 2\";")
         self.checkBox_5.setObjectName("checkBox_5")
         self.verticalLayout.addWidget(self.checkBox_5)
-        self.checkBox_3 = QtWidgets.QCheckBox(self.widget)
+        self.checkBox_3 = QtWidgets.QCheckBox(self.layoutWidget)
         self.checkBox_3.setStyleSheet("font: 14pt \"MS Shell Dlg 2\";")
         self.checkBox_3.setObjectName("checkBox_3")
         self.verticalLayout.addWidget(self.checkBox_3)
-        self.checkBox_2 = QtWidgets.QCheckBox(self.widget)
+        self.checkBox_2 = QtWidgets.QCheckBox(self.layoutWidget)
         self.checkBox_2.setStyleSheet("font: 14pt \"MS Shell Dlg 2\";")
         self.checkBox_2.setObjectName("checkBox_2")
         self.verticalLayout.addWidget(self.checkBox_2)
-        self.checkBox_8 = QtWidgets.QCheckBox(self.widget)
+        self.checkBox_8 = QtWidgets.QCheckBox(self.layoutWidget)
         self.checkBox_8.setStyleSheet("font: 14pt \"MS Shell Dlg 2\";")
         self.checkBox_8.setObjectName("checkBox_8")
         self.verticalLayout.addWidget(self.checkBox_8)
-        self.checkBox_7 = QtWidgets.QCheckBox(self.widget)
+        self.checkBox_7 = QtWidgets.QCheckBox(self.layoutWidget)
         self.checkBox_7.setStyleSheet("font: 14pt \"MS Shell Dlg 2\";\n"
 "")
         self.checkBox_7.setObjectName("checkBox_7")
         self.verticalLayout.addWidget(self.checkBox_7)
-        self.checkBox_9 = QtWidgets.QCheckBox(self.widget)
+        self.checkBox_9 = QtWidgets.QCheckBox(self.layoutWidget)
         self.checkBox_9.setStyleSheet("font: 14pt \"MS Shell Dlg 2\";\n"
 "")
         self.checkBox_9.setObjectName("checkBox_9")

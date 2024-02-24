@@ -1,6 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow
-from main_page import Ui_MainWindow  # Import the UI class from the generated Python file
+from main_page import Ui_MainWindow  
+import yt_downloader
 
 # Import the UI for the advanced page
 from advanced import Ui_AdvancedPage
@@ -27,10 +28,23 @@ class MainWindow(QMainWindow):
         # Connect the "Advanced" button to open the advanced page
         self.ui.pushButton_2.clicked.connect(self.open_advanced_page)
 
+        self.ui.pushButton.clicked.connect(self.start_download)
+
     def open_advanced_page(self):
         self.advanced_window = AdvancedWindow(parent=self)
         self.advanced_window.show()
         self.hide()
+
+    def start_download(self):
+        try:
+            url = self.ui.lineEdit.text()
+            yt_downloader.vid_download(url)
+            self.ui.progressBar.setValue(progress=yt_downloader.down_prog())
+        except Exception as e:
+            print(e)
+
+
+
 
 def main():
     app = QApplication(sys.argv)
