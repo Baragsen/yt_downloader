@@ -3,11 +3,12 @@ import ttkbootstrap
 from tkinter import ttk 
 import downloader
 
-def start(url , state):
-    downloader.vid_download(url)    
+def start(url , state , progressbar  ):
     if state != 0 :
         downloader.write_to_file(url)
         downloader.download_captions(url)
+
+    downloader.vid_download(url,progressbar     )     
 
 
 def first_page():
@@ -37,10 +38,15 @@ def first_page():
 
     state = tk.IntVar()
     config_button = tk.Checkbutton(frame ,height=2 , width=12 ,text='Data' ,variable=state)
-    config_button.grid(row=2 , column=0 ,sticky='w' , padx=(590,0))
+    config_button.grid(row=2 , column=0 ,sticky='w' , padx=(590,0), pady=(0,150))
 
-    start_button = tk.Button(frame ,height=2 , width=12 ,text='Start',command=lambda : start(url.get(), state=state.get()))
-    start_button.grid(row=2 , column=0 ,sticky='w' , padx=(300,0) )
+    progress_bar = ttk.Progressbar(frame, orient="horizontal", length=600, mode="determinate")
+    progress_bar.grid(row=3 , column=0 ,sticky='w' , padx=(200,0) )
+
+    start_button = tk.Button(frame ,height=2 , width=12 ,text='Start',command=lambda : start(url.get(), state.get() , progress_bar))
+    start_button.grid(row=2 , column=0 ,sticky='w' , padx=(300,0) , pady=(0,150) )
+
+
 
 
 

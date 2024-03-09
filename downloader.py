@@ -1,5 +1,5 @@
 from pytubefix import YouTube, Playlist, Channel
-from datetime import timedelta
+import os
 def get_youtube_object(url): 
     try:
         if '/watch?v=' in url:  # YouTube video URL
@@ -61,6 +61,8 @@ def write_to_file(url):
 
 def download_captions(url, lang_code='a.en'):
     try:
+        captions_folder = 'captions'
+        os.makedirs(captions_folder, exist_ok=True)
         yt_obj = get_youtube_object(url)
         if isinstance(yt_obj, Playlist):
             for video_url in yt_obj.video_urls:
@@ -70,29 +72,38 @@ def download_captions(url, lang_code='a.en'):
             captions = yt_obj.captions
             caption_track = captions[lang_code]
                 # Download captions in SRT format (default)
-            caption_track.download(title=f'{yt_obj.video_id}_caption_{lang_code}', srt=True)
+            caption_track.download(title=f'{yt_obj.video_id}_caption_{lang_code}', srt=True , output_path=captions_folder)
       
     except Exception as e:
         print("Error:", e)
 
-def vid_download(url):
+def vid_download(url , progress_bar):
     try:
+        videos_folder = 'videos'
+        os.makedirs(videos_folder, exist_ok=True)
         yt_obj = get_youtube_object(url)
         if isinstance(yt_obj, YouTube):
-            yt_obj =  YouTube(url,on_progress_callback=down_prog)
+            progress_bar['value']=0
+            yt_obj =  YouTube(url,on_progress_callback=lambda stream, chunk, bytes_remaining: down_prog(stream, chunk, bytes_remaining, progress_bar))
             vid = yt_obj.streams.get_highest_resolution() 
-            vid.download()
+            vid.download(output_path=videos_folder)
+
         
         elif isinstance(yt_obj, Playlist) :
             for video_url in yt_obj.video_urls:
-                yt = YouTube(video_url , on_progress_callback=down_prog)
+                progress_bar['value']=0
+                yt = YouTube(video_url , on_progress_callback=lambda stream, chunk, bytes_remaining: down_prog(stream, chunk, bytes_remaining, progress_bar))
                 vid = yt.streams.get_highest_resolution() 
-                vid.download()
+                vid.download(output_path=videos_folder)
+
     except Exception as e:
         print("Error:", e)
     
-def down_prog(stream , chunk , bytes_remaining):
+def down_prog(stream , chunk , bytes_remaining,progress_bar):
     total_size = stream.filesize
     bytes_downloaded = total_size - bytes_remaining
-    percentage_of_compeletion = int((bytes_downloaded / total_size) * 100)
-    print(percentage_of_compeletion)
+    percentage_of_completion = int((bytes_downloaded / total_size) * 100)
+    print(percentage_of_completion)
+    progress_bar['value'] = percentage_of_completion
+    progress_bar.update_idletasks()  
+
