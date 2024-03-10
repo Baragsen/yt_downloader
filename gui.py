@@ -2,13 +2,15 @@ import tkinter as tk
 import ttkbootstrap
 from tkinter import ttk 
 import downloader
+import webbrowser
 
 def start(url , state , progressbar  ):
     if state != 0 :
         downloader.write_to_file(url)
         downloader.download_captions(url)
 
-    downloader.vid_download(url,progressbar     )     
+    downloader.vid_download(url,progressbar)
+    downloader.archive_data()     
 
 
 def first_page():
@@ -41,12 +43,17 @@ def first_page():
     config_button.grid(row=2 , column=0 ,sticky='w' , padx=(590,0), pady=(0,150))
 
     progress_bar = ttk.Progressbar(frame, orient="horizontal", length=600, mode="determinate")
-    progress_bar.grid(row=3 , column=0 ,sticky='w' , padx=(200,0) )
+    progress_bar.grid(row=3 , column=0 ,sticky='w' , padx=(200,100) , pady=(0,200))
 
     start_button = tk.Button(frame ,height=2 , width=12 ,text='Start',command=lambda : start(url.get(), state.get() , progress_bar))
     start_button.grid(row=2 , column=0 ,sticky='w' , padx=(300,0) , pady=(0,150) )
 
 
+    doc_button = ttk.Button(frame, text="Documentation", style='Hyperlink.TButton', command=lambda : webbrowser.open('https://github.com/Baragsen/VidVortex'))
+    doc_button.grid(row=3 , column=0 , sticky='e' , )
+
+
+    
 
 
 

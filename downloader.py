@@ -1,5 +1,8 @@
 from pytubefix import YouTube, Playlist, Channel
+import shutil
 import os
+import zipfile
+
 def get_youtube_object(url): 
     try:
         if '/watch?v=' in url:  # YouTube video URL
@@ -72,7 +75,7 @@ def download_captions(url, lang_code='a.en'):
             captions = yt_obj.captions
             caption_track = captions[lang_code]
                 # Download captions in SRT format (default)
-            caption_track.download(title=f'{yt_obj.video_id}_caption_{lang_code}', srt=True , output_path=captions_folder)
+            caption_track.download(title=f'{yt_obj.title}_caption_{lang_code}', srt=True , output_path=captions_folder)
       
     except Exception as e:
         print("Error:", e)
@@ -103,7 +106,36 @@ def down_prog(stream , chunk , bytes_remaining,progress_bar):
     total_size = stream.filesize
     bytes_downloaded = total_size - bytes_remaining
     percentage_of_completion = int((bytes_downloaded / total_size) * 100)
-    print(percentage_of_completion)
     progress_bar['value'] = percentage_of_completion
     progress_bar.update_idletasks()  
 
+def archive_data():
+    try:
+        # Creating a zip file for archiving
+        with zipfile.ZipFile('archive.zip', 'w', zipfile.ZIP_DEFLATED) as zipf:
+            # Archiving data.txt
+            zipf.write('data.txt')
+
+            # Archiving videos folder
+            videos_folder = 'videos'
+            for root, dirs, files in os.walk(videos_folder):
+                for file in files:
+                    file_path = os.path.join(root, file)
+                    arcname = os.path.relpath(file_path, videos_folder)
+                    zipf.write(file_path, os.path.join('videos', arcname))
+
+            # Archiving captions folder
+            captions_folder = 'captions'
+            for root, dirs, files in os.walk(captions_folder):
+                for file in files:
+                    file_path = os.path.join(root, file)
+                    arcname = os.path.relpath(file_path, captions_folder)
+                    zipf.write(file_path, os.path.join('captions', arcname))
+
+        # Removing original folders after archiving
+        shutil.rmtree(videos_folder)
+        shutil.rmtree(captions_folder)
+        os.remove('data.txt')
+
+    except Exception as e:
+        print("Error:", e)
