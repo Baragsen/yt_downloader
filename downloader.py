@@ -1,4 +1,4 @@
-from pytubefix import YouTube, Playlist, Channel
+from pytubefix import YouTube, Playlist
 import shutil
 import os
 import zipfile
