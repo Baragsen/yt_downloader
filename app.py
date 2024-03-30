@@ -49,7 +49,7 @@ def first_page():
     start_button.grid(row=2 , column=0 ,sticky='w' , padx=(300,0) , pady=(0,150) )
 
 
-    doc_button = ttk.Button(frame, text="Documentation", style='Hyperlink.TButton', command=lambda : webbrowser.open('https://github.com/Baragsen/VidVortex'))
+    doc_button = ttk.Button(frame, text="Documentation", style='Hyperlink.TButton', command=lambda : webbrowser.open('https://github.com/NizarKarroud/VidVortex'))
     doc_button.grid(row=3 , column=0 , sticky='e' )
 
 
